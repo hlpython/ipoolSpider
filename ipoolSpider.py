@@ -16,8 +16,11 @@ class GetIP(threading.Thread):
 
     def get_ip(self):
         time.sleep(1)
-        header = 'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
-        response = requests.get(self.url, headers={'user-agent': header}, timeout=5)
+        headers = {
+            'Connection': 'keep-alive',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
+        }
+        response = requests.get(self.url, headers=headers, timeout=5)
         response.encoding = 'utf-8'
         html = etree.HTML(response.text)
         print(self.url + ' ' + str(response.status_code))
