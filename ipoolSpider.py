@@ -4,6 +4,7 @@ import requests, threading, codecs, time
 from lxml import etree
 
 
+# 爬取IP
 class GetIP(threading.Thread):
     def __init__(self, url, which):
         threading.Thread.__init__(self)
@@ -17,6 +18,7 @@ class GetIP(threading.Thread):
         response = requests.get(self.url, headers=headers, timeout=5)
         html = etree.HTML(response.text)
         print('[' + str(response.status_code) + ']' + self.url)
+        # 对不同的网址进行爬取
         if self.which is 'xici':
             for tr in html.xpath('//tr[contains(@class, *)]'):
                 allIP.append([tr.xpath('./td/text()')[0], tr.xpath('./td/text()')[1]])
@@ -29,6 +31,7 @@ class GetIP(threading.Thread):
         self.get_ip()
 
 
+# 验证IP可用性
 class CheackIp(threading.Thread):
     def __init__(self, ipList):
         threading.Thread.__init__(self)
@@ -59,6 +62,8 @@ def run_spider_threads():
         threads.append(GetIP(kuai[i], 'kuai'))
     for i in range(len(threads)):
         threads[i].start()
+        # 快代理会ban访问太快的，只好等待1.5秒
+        # 西刺会禁止同IP的多次爬取，所以一天不要爬太多次
         time.sleep(1.5)
     for i in range(len(threads)):
         threads[i].join()
@@ -68,13 +73,14 @@ def run_check_threads():
     print('[!]Total crawling %d ip' % len(allIP))
     x = int(len(allIP)/25)
     for i in range(25):
+        # 对IP切片
         threads.append(CheackIp(allIP[x*i:x*(i+1)]))
     for i in range(len(threads)):
         threads[i].start()
     print('[*]Start threads: %s' % threading.activeCount())
     for i in range(len(threads)):
         threads[i].join()
-    print('[*]End threads: %s\n' % threading.activeCount())     
+    print('[*]End threads: %s\n' % threading.activeCount())
 
 
 def write():
