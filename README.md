@@ -2,6 +2,13 @@
 ==
 usage:
 
-        python3 ipoolSpider.py
+    python3 ipoolSpider.py
+爬取的IP保存在当前目录下的ipool.txt
 
-爬取的IP文件ipool.txt保存在当前目录
+ipool.text下的IP格式：
+
+    121.31.145.177:8123
+    183.240.87.229:80
+    121.31.102.98:8123
+    182.90.83.72:8123
+    ……
