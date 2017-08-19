@@ -1,10 +1,14 @@
 # 快代理和西刺的高匿代理爬虫
 
-Usage: `python3 ipoolSpider.py`
+Usage:
 
-爬取的IP保存在当前目录下的ipool.txt
+```bash
+./ipoolSpider.py
+```
 
-ipool.text下的IP格式：
+爬取的 IP 保存在当前目录下的 ipool.txt
+
+ipool.text下的 IP 格式：
 
 ```text
 121.31.145.177:8123
